@@ -78,6 +78,9 @@ class HttpGetHandler(BaseHTTPRequestHandler):
             argi = get_options(args)
             for chunk in main(argi):
                 txt += chunk
+            if argi.file_name:
+                sav(txt, argi.file_name)
+                
         except:
             txt = f"Ace Engine не запущен или ошибка в коде..."
         self.wfile.write(txt.encode())
@@ -154,6 +157,30 @@ class HttpGetHandler(BaseHTTPRequestHandler):
         <ul>
             <li><a href="/index">Домой</a></li>
             <li><a href="/playlist.m3u">Ace TV Torrent</a></li>
+            <li>
+                <ul>
+                <li><b>Commands request list:</b></li>
+                <li><b>Example:</b> <a target="__blank" href="http://localhost:8000/playlist.m3u?target=192.168.1.2:6878&file_name=tv_list.m3u&category=movies">http://localhost:8000/playlist.m3u?target=192.168.1.2:6878&file_name=tv_list.m3u&category=movies</a></li>
+                <li><b>query</b> - Pattern to search tv channels. [String]</li>
+                <li><b>quiet</b> - increase output quiet. [Boolean]</li>
+                <li><b>name</b> - Exact tv channels to search for, doesn't effect json output. [str]</li>
+                <li><b>category</b> - filter by category.</li>
+                <li><b>proxy</b> - proxy host:port to conntect to engine api.</li>
+                <li><b>targe</b>t - target host:port to conntect to engine hls.</li>
+                <li><b>page_size</b> - page size (max 200).</li>
+                <li><b>group_by_channels</b> - group output results by channel.</li>
+                <li><b>show_epg</b> - include EPG in the response.</li>
+                <li><b>json</b> - json output.</li>
+                <li><b>html</b> - html output.</li>
+                <li><b>xml_epg</b> - make XML EPG.</li>
+                <li><b>debug</b> - debug mode.</li>
+                <li><b>file_name</b> - file name save [folder playlists]</li>
+                <li><b>url</b> - output single bare url of the stream instead of playlist</li>
+                <li><b>after</b> - availability updated at.</li>
+                <li><b>version</b> - Show version number.</li>
+                </ul>
+            </li>
+            <li>------</li>
             <li><a href="/playlist.m3u?html=1">AceStream TV HTML</a></li>
             <li>------</li>
             <li><a href="/films.m3u">Films Torrent</a></li>
